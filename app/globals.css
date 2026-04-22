@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #1a237e;
+  --accent: #00bcd4;
+}
+
+/* Dark mode base */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: #111827; }
+::-webkit-scrollbar-thumb  { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+/* Smooth transitions */
+* { transition-property: background-color, border-color, color, opacity;
+    transition-duration: 150ms; }
+
+/* Table row hover */
+.data-row:hover td { background: rgba(99,102,241,0.08); }
+
+/* Band colours */
+.band-95  { @apply bg-blue-700 text-blue-100; }
+.band-90  { @apply bg-blue-500 text-blue-100; }
+.band-75  { @apply bg-green-600 text-green-100; }
+.band-60  { @apply bg-yellow-600 text-yellow-100; }
+.band-33  { @apply bg-orange-600 text-orange-100; }
+.band-0   { @apply bg-red-700 text-red-100; }
+
+/* AdSense ad container */
+.adsbygoogle { display: block; }
