@@ -444,12 +444,15 @@ async function handlePdf(body: {
   // only between react-pdf's narrow DocumentProps and React's generic element type.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const element         = PdfDocument({ students, selections, school_name }) as any;
-  const pdfBuffer       = await pdf(element).toBuffer();
+const stream     = await pdf(element as any).toBuffer();
+const uint8Array = stream instanceof Buffer
+  ? stream
+  : new Uint8Array(await new Response(stream as any).arrayBuffer());
 
-  return new NextResponse(pdfBuffer, {
-    headers: {
-      "Content-Type":        "application/pdf",
-      "Content-Disposition": `attachment; filename="student_forms_${Date.now()}.pdf"`,
-    },
-  });
+return new NextResponse(uint8Array, {
+  headers: {
+    "Content-Type":        "application/pdf",
+    "Content-Disposition": `attachment; filename="student_forms_${Date.now()}.pdf"`,
+  },
+});
 }
