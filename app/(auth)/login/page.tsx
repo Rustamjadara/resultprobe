@@ -1,10 +1,10 @@
 // app/(auth)/login/page.tsx
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function LoginPage() {
+function LoginContent() {
   const [pin,       setPin]       = useState("");
   const [loading,   setLoading]   = useState(false);
   const [attempts,  setAttempts]  = useState(0);
@@ -106,5 +106,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }
