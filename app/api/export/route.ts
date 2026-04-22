@@ -437,10 +437,13 @@ async function handlePdf(body: {
   school_name: string;
 }) {
   const { students, selections, school_name } = body;
-  const React           = (await import("react")).default;
   const { pdf }         = await import("@react-pdf/renderer");
   const { PdfDocument } = await import("./PdfDocument");
-  const element         = React.createElement(PdfDocument, { students, selections, school_name });
+  // Cast to `any` to satisfy @react-pdf/renderer's internal DocumentProps type.
+  // React.createElement produces a valid ReactElement — the type mismatch is
+  // only between react-pdf's narrow DocumentProps and React's generic element type.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const element         = PdfDocument({ students, selections, school_name }) as any;
   const pdfBuffer       = await pdf(element).toBuffer();
 
   return new NextResponse(pdfBuffer, {
